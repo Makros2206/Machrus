@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jam Digital Modern</title>
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --text-color: #fff;
+            --primary-color: #e94560;
+            --secondary-bg-color: #0f3460;
+            --gradient-bg: linear-gradient(145deg, #0f3460, #16213e);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--gradient-bg);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.5s, color 0.5s;
+            flex-direction: column;
+        }
+
+        .clock-container {
+            background: var(--secondary-bg-color);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            width: 350px;
+            margin-bottom: 20px;
+        }
+
+        #clock {
+            font-size: 80px;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #date {
+            font-size: 24px;
+            color: #f1f1f1;
+            transition: color 1s;
+        }
+
+        .border {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 20px 0;
+            transition: background-color 0.5s;
+        }
+
+        #theme-selector {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+        }
+
+        #theme-selector:hover {
+            background-color: #d13b50;
+            box-shadow: 0 8px 15px rgba(233, 69, 96, 0.3);
+        }
+
+        .team {
+            font-size: 18px;
+            color: var(--text-color);
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            width: 300px;
+            background-color: var(--secondary-bg-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .team-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .team-list li {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        /* Tema terang */
+        .light-theme {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --primary-color: #007bff;
+            --secondary-bg-color: #ffffff;
+            --gradient-bg: linear-gradient(145deg, #ffffff, #e6e6e6);
+        }
+
+        /* Tema merah */
+        .red-theme {
+            --bg-color: #ff4e50;
+            --text-color: #fff;
+            --primary-color: #f9d423;
+            --secondary-bg-color: #fc913a;
+            --gradient-bg: linear-gradient(145deg, #fc913a, #ff4e50);
+        }
+
+        /* Tema hijau */
+        .green-theme {
+            --bg-color: #2ecc71;
+            --text-color: #fff;
+            --primary-color: #27ae60;
+            --secondary-bg-color: #16a085;
+            --gradient-bg: linear-gradient(145deg, #16a085, #2ecc71);
+        }
+
+        /* Tema biru */
+        .blue-theme {
+            --bg-color: #3498db;
+            --text-color: #fff;
+            --primary-color: #2980b9;
+            --secondary-bg-color: #34495e;
+            --gradient-bg: linear-gradient(145deg, #34495e, #3498db);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="clock-container">
+        <div id="clock"></div>
+        <div class="border"></div>
+        <div id="date"></div>
+        <select id="theme-selector">
+            <option value="dark">Tema Gelap</option>
+            <option value="light">Tema Terang</option>
+            <option value="red">Tema Merah</option>
+            <option value="green">Tema Hijau</option>
+            <option value="blue">Tema Biru</option>
+        </select>
+    </div>
+
+    <div class="team">
+        <p>Nama Kelompok:</p>
+        <ul class="team-list">
+            <li>1. Machrus</li>
+            <li>2. Alfian Kartiko</li>
+        </ul>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            const dateString = `${day}/${month}/${year}`;
+            
+            document.getElementById('clock').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // Panggilan pertama untuk segera menampilkan waktu
+
+        // Mengganti tema
+        const themeSelector = document.getElementById('theme-selector');
+        themeSelector.addEventListener('change', () => {
+            const selectedTheme = themeSelector.value;
+            document.body.className = ''; // Reset tema
+            switch (selectedTheme) {
+                case 'light':
+                    document.body.classList.add('light-theme');
+                    break;
+                case 'red':
+                    document.body.classList.add('red-theme');
+                    break;
+                case 'green':
+                    document.body.classList.add('green-theme');
+                    break;
+                case 'blue':
+                    document.body.classList.add('blue-theme');
+                    break;
+                default:
+                    // Tetap pada tema gelap
+                    break;
+            }
+        });
+    </script>
+
+</body>
+</html>
